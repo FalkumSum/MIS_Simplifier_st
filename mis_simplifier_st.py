@@ -331,9 +331,9 @@ st.caption("For each line: keep the header (line name) and the first & last coor
 
 # --- 1) Upload & parse ---
 with st.expander("1) Upload & parse", expanded=True):
-    uploaded = st.file_uploader("Choose a .mis (or MIS-like) text file", type=None, key="uploader")
+    uploaded = st.file_uploader("Choose a .mis file", type=None, key="uploader")
 
-    parse_btn = st.button("Parse file", type="primary", use_container_width=True)
+    parse_btn = st.button("Parse file and generate simplified mis for download", type="primary", use_container_width=True)
 
     if parse_btn:
         if not uploaded:
@@ -373,7 +373,7 @@ with st.expander("2) Map settings", expanded=True):
             help="Prefilled from filename/content; change if needed."
         )
 
-        apply_clicked = st.form_submit_button("Apply settings", type="primary")
+        apply_clicked = st.form_submit_button("Show on map", type="primary")
 
     if apply_clicked:
         if not st.session_state.parsed:
@@ -408,11 +408,11 @@ if st.session_state.parsed:
         st.write(f"- **Source:** `{st.session_state.source_name}`")
     st.write(f"- **EPSG in use:** {st.session_state.epsg_current}")
 
-    st.subheader("Interactive map")
+    st.subheader("Map")
     if st.session_state.rendered_map_html:
         components.html(st.session_state.rendered_map_html, height=650, scrolling=False)
     else:
-        st.info("Apply settings to draw the map.")
+        st.info("Clic \"show map\" to visualize the lines.")
 
     st.subheader("Download simplified file")
     base = os.path.splitext(st.session_state.source_name or "output.mis")[0]
